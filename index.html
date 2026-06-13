@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+
+<html lang="en" style="background:#06060A !important; background-color:#06060A !important;">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#06060A"/>
+<title>Manifest FC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+–gold: #C9A84C;
+–gold-light: #E8C96A;
+–gold-dim: rgba(201,168,76,0.15);
+–black: #06060A;
+–surface: #0E0E14;
+–surface2: #15151E;
+–border: rgba(255,255,255,0.07);
+–text: #F0EEE8;
+–muted: #6B6880;
+–white: #FFFFFF;
+}
+
+html, body {
+height: 100% !important;
+background: #06060A !important;
+background-color: #06060A !important;
+color: #F0EEE8 !important;
+font-family: ‘Inter’, sans-serif;
+-webkit-font-smoothing: antialiased;
+overflow: hidden;
+}
+
+- { color: inherit; }
+
+/* ── APP SHELL ── */
+#app {
+position: fixed;
+inset: 0;
+display: flex;
+flex-direction: column;
+max-width: 430px;
+margin: 0 auto;
+overflow: hidden;
+background: #06060A;
+background-color: #06060A;
+}
+
+/* ── SCREENS ── */
+.screen {
+position: absolute;
+inset: 0;
+display: flex;
+flex-direction: column;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.35s ease;
+overflow: hidden;
+background: #06060A;
+background-color: #06060A;
+}
+.screen.active {
+opacity: 1;
+pointer-events: all;
+}
+
+/* ── SCROLLABLE AREA ── */
+.scroll-area {
+flex: 1;
+overflow-y: auto;
+-webkit-overflow-scrolling: touch;
+background: #06060A;
+background-color: #06060A;
+}
+.scroll-area::-webkit-scrollbar { display: none; }
+
+/* ══════════════════════════════
+HOME SCREEN
+══════════════════════════════ */
+#home {
+background: #06060A;
+}
+
+.home-grain {
+position: absolute;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.03’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 0;
+}
+
+.home-glow {
+position: absolute;
+top: -120px;
+left: 50%;
+transform: translateX(-50%);
+width: 500px;
+height: 500px;
+background: radial-gradient(circle, rgba(201,168,76,0.09) 0%, transparent 65%);
+pointer-events: none;
+z-index: 0;
+}
+
+.home-inner {
+position: relative;
+z-index: 1;
+display: flex;
+flex-direction: column;
+height: 100%;
+}
+
+/* Top bar */
+.topbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 52px 24px 0;
+}
+
+.logo-mark {
+display: flex;
+flex-direction: column;
+gap: 2px;
+}
+.logo-mark span:first-child {
+font-family: ‘Playfair Display’, serif;
+font-size: 22px;
+font-weight: 900;
+color: #FFFFFF;
+letter-spacing: -0.5px;
+line-height: 1;
+}
+.logo-mark span:last-child {
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 5px;
+color: #C9A84C;
+text-transform: uppercase;
+}
+
+.lang-pill {
+display: flex;
+align-items: center;
+gap: 7px;
+padding: 8px 16px;
+border-radius: 40px;
+border: 1px solid rgba(201,168,76,0.3);
+background: rgba(201,168,76,0.06);
+color: #C9A84C;
+font-size: 12px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s;
+letter-spacing: 0.3px;
+}
+.lang-pill:hover {
+background: rgba(201,168,76,0.12);
+border-color: rgba(201,168,76,0.5);
+}
+.lang-flag { font-size: 15px; }
+
+/* Daily banner */
+.daily-banner {
+margin: 32px 24px 0;
+padding: 28px 28px 32px;
+background: linear-gradient(135deg, #13111A 0%, #0E0D14 100%);
+border-radius: 24px;
+border: 1px solid rgba(201,168,76,0.18);
+position: relative;
+overflow: hidden;
+}
+.daily-banner::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 2px;
+background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+}
+.daily-banner::after {
+content: ‘’;
+position: absolute;
+bottom: -40px; right: -40px;
+width: 150px; height: 150px;
+background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+border-radius: 50%;
+}
+.daily-eyebrow {
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 4px;
+color: #C9A84C;
+text-transform: uppercase;
+margin-bottom: 14px;
+}
+.daily-text {
+font-family: ‘Playfair Display’, serif;
+font-size: 19px;
+font-weight: 700;
+font-style: italic;
+line-height: 1.55;
+color: #FFFFFF;
+position: relative;
+z-index: 1;
+}
+
+/* Section header */
+.section-header {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+padding: 36px 24px 18px;
+}
+.section-title {
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 4px;
+color: #6B6880;
+text-transform: uppercase;
+}
+.section-count {
+font-size: 11px;
+color: #6B6880;
+}
+
+/* Category grid */
+.cat-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 14px;
+padding: 0 24px 40px;
+}
+
+.cat-card {
+position: relative;
+border-radius: 22px;
+padding: 26px 20px 22px;
+cursor: pointer;
+border: 1px solid rgba(255,255,255,0.07);
+background: #0E0E14;
+overflow: hidden;
+transition: transform 0.2s ease, border-color 0.2s ease;
+-webkit-tap-highlight-color: transparent;
+}
+.cat-card:active { transform: scale(0.97); }
+
+.cat-card-glow {
+position: absolute;
+bottom: -30px; right: -30px;
+width: 120px; height: 120px;
+border-radius: 50%;
+opacity: 0.18;
+transition: opacity 0.3s;
+}
+.cat-card:hover .cat-card-glow { opacity: 0.3; }
+
+.cat-card-shine {
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 1px;
+opacity: 0.6;
+}
+
+.cat-icon {
+font-size: 36px;
+margin-bottom: 14px;
+display: block;
+line-height: 1;
+}
+.cat-name {
+font-size: 15px;
+font-weight: 700;
+color: #FFFFFF;
+margin-bottom: 5px;
+line-height: 1.2;
+}
+.cat-sub {
+font-size: 11px;
+color: #6B6880;
+font-weight: 500;
+}
+
+.cat-arrow {
+position: absolute;
+top: 20px; right: 20px;
+width: 28px; height: 28px;
+border-radius: 50%;
+background: rgba(255,255,255,0.05);
+display: flex; align-items: center; justify-content: center;
+font-size: 12px;
+color: #6B6880;
+transition: all 0.2s;
+}
+.cat-card:hover .cat-arrow {
+background: rgba(255,255,255,0.1);
+color: #FFFFFF;
+}
+
+/* ══════════════════════════════
+PRAYER SCREEN
+══════════════════════════════ */
+#prayer {
+background: #06060A;
+}
+
+.prayer-bg {
+position: absolute;
+inset: 0;
+pointer-events: none;
+z-index: 0;
+transition: background 0.5s ease;
+}
+
+.prayer-inner {
+position: relative;
+z-index: 1;
+display: flex;
+flex-direction: column;
+height: 100%;
+}
+
+.prayer-topbar {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 52px 24px 0;
+flex-shrink: 0;
+}
+
+.back-btn {
+display: flex;
+align-items: center;
+gap: 8px;
+padding: 9px 18px;
+border-radius: 40px;
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.07);
+color: #F0EEE8;
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.09); }
+
+.prayer-cat-label {
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 2px;
+text-transform: uppercase;
+}
+
+/* Counter */
+.prayer-counter {
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 28px 24px 0;
+flex-shrink: 0;
+gap: 16px;
+}
+.counter-bar {
+flex: 1;
+height: 2px;
+background: rgba(255,255,255,0.07);
+border-radius: 2px;
+overflow: hidden;
+}
+.counter-fill {
+height: 100%;
+border-radius: 2px;
+transition: width 0.4s ease;
+}
+.counter-num {
+font-size: 12px;
+font-weight: 600;
+color: #6B6880;
+white-space: nowrap;
+min-width: 40px;
+text-align: right;
+}
+
+/* Prayer card area */
+.prayer-card-area {
+flex: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 24px;
+position: relative;
+overflow: hidden;
+}
+
+.prayer-card {
+width: 100%;
+max-width: 380px;
+transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.prayer-card.exit-up {
+opacity: 0;
+transform: translateY(-32px);
+}
+.prayer-card.exit-down {
+opacity: 0;
+transform: translateY(32px);
+}
+
+.prayer-number {
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 4px;
+text-transform: uppercase;
+margin-bottom: 28px;
+opacity: 0.5;
+}
+
+.prayer-text {
+font-family: ‘Playfair Display’, serif;
+font-size: 26px;
+font-weight: 700;
+font-style: italic;
+line-height: 1.6;
+color: #FFFFFF;
+}
+
+.prayer-divider {
+width: 40px;
+height: 2px;
+margin: 32px 0;
+border-radius: 2px;
+}
+
+.prayer-reflection {
+font-size: 13px;
+line-height: 1.7;
+color: #6B6880;
+font-weight: 400;
+}
+
+/* Nav controls */
+.prayer-nav {
+padding: 0 24px 52px;
+display: flex;
+gap: 12px;
+flex-shrink: 0;
+}
+
+.nav-btn {
+flex: 1;
+height: 58px;
+border-radius: 18px;
+border: none;
+font-size: 18px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.2s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+-webkit-tap-highlight-color: transparent;
+}
+.nav-btn:disabled {
+opacity: 0.25;
+cursor: default;
+}
+.nav-prev {
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.07);
+color: #F0EEE8;
+flex: 0 0 58px;
+}
+.nav-prev:hover:not(:disabled) { background: rgba(255,255,255,0.09); }
+
+.nav-next {
+font-size: 14px;
+font-weight: 700;
+letter-spacing: 1px;
+gap: 10px;
+}
+.nav-next:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
+.nav-next:active:not(:disabled) { transform: translateY(0); }
+
+/* ══════════════════════════════
+LANGUAGE SCREEN
+══════════════════════════════ */
+#language {
+background: #06060A;
+}
+.lang-inner {
+position: relative;
+z-index: 1;
+display: flex;
+flex-direction: column;
+height: 100%;
+}
+.lang-header {
+padding: 52px 24px 32px;
+flex-shrink: 0;
+}
+.lang-back {
+display: flex;
+align-items: center;
+gap: 8px;
+padding: 9px 18px;
+border-radius: 40px;
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.07);
+color: #F0EEE8;
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+margin-bottom: 32px;
+width: fit-content;
+transition: all 0.2s;
+}
+.lang-back:hover { background: rgba(255,255,255,0.09); }
+
+.lang-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 34px;
+font-weight: 900;
+color: #FFFFFF;
+line-height: 1.15;
+margin-bottom: 10px;
+}
+.lang-sub {
+font-size: 14px;
+color: #6B6880;
+line-height: 1.6;
+}
+
+.lang-list {
+padding: 0 24px 40px;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.lang-item {
+display: flex;
+align-items: center;
+gap: 18px;
+padding: 20px 22px;
+border-radius: 18px;
+background: #0E0E14;
+border: 1px solid rgba(255,255,255,0.07);
+cursor: pointer;
+transition: all 0.2s;
+-webkit-tap-highlight-color: transparent;
+}
+.lang-item:hover { background: #15151E; }
+.lang-item.selected {
+border-color: rgba(201,168,76,0.4);
+background: rgba(201,168,76,0.07);
+}
+
+.lang-item-flag { font-size: 30px; line-height: 1; }
+
+.lang-item-info { flex: 1; }
+.lang-item-name {
+font-size: 16px;
+font-weight: 700;
+color: #FFFFFF;
+margin-bottom: 3px;
+}
+.lang-item-native {
+font-size: 12px;
+color: #6B6880;
+}
+
+.lang-check {
+width: 24px; height: 24px;
+border-radius: 50%;
+background: #C9A84C;
+display: flex; align-items: center; justify-content: center;
+font-size: 12px;
+color: #000;
+font-weight: 800;
+opacity: 0;
+transition: opacity 0.2s;
+}
+.lang-item.selected .lang-check { opacity: 1; }
+</style>
+
+</head>
+<body style="background:#06060A !important; background-color:#06060A !important; color:#F0EEE8;">
+<div id="app">
+
+  <!-- ══ HOME ══ -->
+
+  <div class="screen active" id="home">
+    <div class="home-grain"></div>
+    <div class="home-glow"></div>
+    <div class="home-inner">
+      <div class="topbar">
+        <div class="logo-mark">
+          <span>Manifest</span>
+          <span>FC · Football Prayers</span>
+        </div>
+        <div class="lang-pill" onclick="showScreen('language')">
+          <span class="lang-flag" id="home-flag">🇬🇧</span>
+          <span id="home-lang-label">English</span>
+          <span style="opacity:0.5; font-size:10px;">▾</span>
+        </div>
+      </div>
+
+```
+  <div class="scroll-area">
+    <!-- Daily banner -->
+    <div class="daily-banner" style="margin:28px 24px 0;">
+      <div class="daily-eyebrow" data-i18n="today">Today's Declaration</div>
+      <div class="daily-text" id="daily-text">
+        "Today I stand in the gap for my team. I send courage before them and peace behind them. May every player step onto that pitch knowing they are not alone."
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="section-header">
+      <span class="section-title" data-i18n="choose">Choose Your Prayer</span>
+      <span class="section-count" id="cat-count">8 categories</span>
+    </div>
+
+    <div class="cat-grid" id="cat-grid"></div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- ══ PRAYER ══ -->
+
+  <div class="screen" id="prayer">
+    <div class="prayer-bg" id="prayer-bg"></div>
+    <div class="prayer-inner">
+      <div class="prayer-topbar">
+        <div class="back-btn" onclick="showScreen('home')">
+          <span>←</span> <span data-i18n="back">Back</span>
+        </div>
+        <div class="prayer-cat-label" id="prayer-cat-label"></div>
+      </div>
+
+```
+  <div class="prayer-counter">
+    <div class="counter-bar">
+      <div class="counter-fill" id="counter-fill" style="width:5%"></div>
+    </div>
+    <div class="counter-num" id="counter-num">1 / 20</div>
+  </div>
+
+  <div class="prayer-card-area">
+    <div class="prayer-card" id="prayer-card">
+      <div class="prayer-number" id="prayer-number">Prayer 01</div>
+      <div class="prayer-text" id="prayer-text"></div>
+      <div class="prayer-divider" id="prayer-divider"></div>
+      <div class="prayer-reflection" id="prayer-reflection"></div>
+    </div>
+  </div>
+
+  <div class="prayer-nav">
+    <button class="nav-btn nav-prev" id="prev-btn" onclick="prevPrayer()">←</button>
+    <button class="nav-btn nav-next" id="next-btn" onclick="nextPrayer()">
+      <span data-i18n="next">Next Prayer</span> <span>→</span>
+    </button>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- ══ LANGUAGE ══ -->
+
+  <div class="screen" id="language">
+    <div class="lang-inner">
+      <div class="lang-header">
+        <div class="lang-back" onclick="showScreen('home')">← <span data-i18n="back">Back</span></div>
+        <div class="lang-title" data-i18n="lang-title">Your Language</div>
+        <div class="lang-sub" data-i18n="lang-sub">All prayers will appear in the language you choose.</div>
+      </div>
+      <div class="scroll-area">
+        <div class="lang-list" id="lang-list"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════════
+
+const LANGS = [
+  { code:'en', label:'English',    native:'English',    flag:'🇬🇧' },
+  { code:'es', label:'Español',    native:'Spanish',    flag:'🇪🇸' },
+  { code:'pt', label:'Português',  native:'Portuguese', flag:'🇧🇷' },
+  { code:'fr', label:'Français',   native:'French',     flag:'🇫🇷' },
+  { code:'ar', label:'العربية',    native:'Arabic',     flag:'🇲🇦' },
+  { code:'de', label:'Deutsch',    native:'German',     flag:'🇩🇪' },
+];
+
+const I18N = {
+  en: { today:"Today's Declaration", choose:"Choose Your Prayer", back:"Back", next:"Next Prayer", 'lang-title':"Your Language", 'lang-sub':"All prayers will appear in the language you choose.", prayers:"Prayers" },
+  es: { today:"Declaración de Hoy", choose:"Elige Tu Oración", back:"Volver", next:"Siguiente Oración", 'lang-title':"Tu Idioma", 'lang-sub':"Todas las oraciones aparecerán en el idioma que elijas.", prayers:"Oraciones" },
+  pt: { today:"Declaração de Hoje", choose:"Escolha Sua Oração", back:"Voltar", next:"Próxima Oração", 'lang-title':"Seu Idioma", 'lang-sub':"Todas as orações aparecerão no idioma que você escolher.", prayers:"Orações" },
+  fr: { today:"Déclaration du Jour", choose:"Choisissez Votre Prière", back:"Retour", next:"Prière Suivante", 'lang-title':"Votre Langue", 'lang-sub':"Toutes les prières apparaîtront dans la langue que vous choisissez.", prayers:"Prières" },
+  ar: { today:"إعلان اليوم", choose:"اختر صلاتك", back:"رجوع", next:"الصلاة التالية", 'lang-title':"لغتك", 'lang-sub':"ستظهر جميع الصلوات باللغة التي تختارها.", prayers:"صلوات" },
+  de: { today:"Heutige Erklärung", choose:"Wähle Dein Gebet", back:"Zurück", next:"Nächstes Gebet", 'lang-title':"Deine Sprache", 'lang-sub':"Alle Gebete erscheinen in der von dir gewählten Sprache.", prayers:"Gebete" },
+};
+
+const DAILY = {
+  en: "Today I stand in the gap for my team. I send courage before them and peace behind them. May every player step onto that pitch knowing they are not alone.",
+  es: "Hoy me pongo en la brecha por mi equipo. Les envío valentía por delante y paz por detrás. Que cada jugador salga al campo sabiendo que no está solo.",
+  pt: "Hoje me coloco na brecha pelo meu time. Envio coragem à frente deles e paz atrás. Que cada jogador entre em campo sabendo que não está sozinho.",
+  fr: "Aujourd'hui je me tiens dans la brèche pour mon équipe. J'envoie du courage devant eux et la paix derrière eux. Que chaque joueur entre sur ce terrain en sachant qu'il n'est pas seul.",
+  ar: "اليوم أقف في الثغرة من أجل فريقي. أرسل الشجاعة أمامهم والسلام خلفهم. ليدخل كل لاعب إلى الملعب وهو يعلم أنه ليس وحده.",
+  de: "Heute stehe ich in die Lücke für mein Team. Ich sende Mut vor ihnen und Frieden hinter ihnen. Möge jeder Spieler auf den Platz treten und wissen, dass er nicht allein ist.",
+};
+
+const CATEGORIES = [
+  { id:'victory',   icon:'🏆', color:'#C9A84C', glow:'#C9A84C',
+    label:{ en:'Victory',    es:'Victoria',     pt:'Vitória',    fr:'Victoire',      ar:'النصر',     de:'Sieg'         } },
+  { id:'courage',   icon:'🔥', color:'#E05C2A', glow:'#E05C2A',
+    label:{ en:'Courage',    es:'Coraje',       pt:'Coragem',    fr:'Courage',       ar:'الشجاعة',   de:'Mut'          } },
+  { id:'focus',     icon:'🎯', color:'#4A90D9', glow:'#4A90D9',
+    label:{ en:'Focus',      es:'Enfoque',      pt:'Foco',       fr:'Concentration', ar:'التركيز',   de:'Fokus'        } },
+  { id:'comeback',  icon:'⚡', color:'#9B59B6', glow:'#9B59B6',
+    label:{ en:'Comeback',   es:'Regreso',      pt:'Volta',      fr:'Retour',        ar:'العودة',    de:'Comeback'     } },
+  { id:'unity',     icon:'🤝', color:'#27AE60', glow:'#27AE60',
+    label:{ en:'Unity',      es:'Unidad',       pt:'Unidade',    fr:'Unité',         ar:'الوحدة',    de:'Einheit'      } },
+  { id:'strength',  icon:'💪', color:'#E74C3C', glow:'#E74C3C',
+    label:{ en:'Strength',   es:'Fuerza',       pt:'Força',      fr:'Force',         ar:'القوة',     de:'Stärke'       } },
+  { id:'legacy',    icon:'👑', color:'#F39C12', glow:'#F39C12',
+    label:{ en:'Legacy',     es:'Legado',       pt:'Legado',     fr:'Héritage',      ar:'الإرث',     de:'Vermächtnis'  } },
+  { id:'nations',   icon:'🌍', color:'#1ABC9C', glow:'#1ABC9C',
+    label:{ en:'Nations',    es:'Naciones',     pt:'Nações',     fr:'Nations',       ar:'الأمم',     de:'Nationen'     } },
+];
+
+// ── PRAYERS (English master, 20 each) ──
+// Format: { text, reflection }
+const PRAYERS_EN = {
+
+  victory: [
+    { text:"I pray that my team rises today with a victory that belongs to them. Let every boot that strikes that ball carry the weight of a thousand hours of sacrifice — and let it land exactly where it needs to.",
+      reflection:"Speak this slowly. Feel the weight of every training session your players poured out for this moment." },
+    { text:"May the final whistle blow in our favour. I call it in now, before the first kick, before the first breath of the match. Victory is not a surprise — it is a declaration that was made before the game began.",
+      reflection:"You are not wishing for victory. You are summoning what already belongs to your team." },
+    { text:"I pray that every shot on target finds its way. That the goalkeeper's hands are steady. That the defenders hold their line. That the striker trusts the instinct that cannot be coached — the one that says: now.",
+      reflection:"Pray position by position. Cover your whole team in this declaration." },
+    { text:"Today I release every prayer I have held in silence for this team. I speak over their legs: do not tire. I speak over their minds: do not doubt. I speak over their hearts: you were made for exactly this.",
+      reflection:"Let this be a sending-off. You are dispatching them with your words." },
+    { text:"Let the scoreboard at the end of this match tell a story that people will repeat. Not just a win — but a statement. A match they will never forget.",
+      reflection:"Some victories are just results. Others become legends. Pray for the legendary kind." },
+    { text:"I pray for goals. Not just the ones that go in — but the moments before them. The right pass. The right run. The right movement that opens the space that nobody else saw.",
+      reflection:"Football is a game of inches and instincts. Pray into the details." },
+    { text:"May the spirit of this team be unbreakable today. Let no setback silence them. Let no early goal against them shake their foundation. What was built in training does not crumble under pressure — it rises.",
+      reflection:"Resilience within a match is its own kind of victory. Declare it over them." },
+    { text:"I pray that the referee sees clearly and judges fairly. That the conditions are equal and the best team — my team — wins on merit and on heart and on the will they carried here from across the world.",
+      reflection:"Pray over the context, not just the players. Every element of a match matters." },
+    { text:"Let victory tonight belong to those who wanted it the most, who bled for it in training, who carried their nation's hope in their chest every single day they showed up.",
+      reflection:"This is not blind support. This is a prayer rooted in what your players have genuinely sacrificed." },
+    { text:"I declare that when that ball crosses the line, something shifts. Not just in the tournament — but in the nation. That a people watching from a thousand miles away will rise and feel that they too have won something today.",
+      reflection:"Goals do more than change scores. They lift nations. Declare that lift." },
+    { text:"I pray that my team's captain leads with calm. That in the moments of chaos — and there will be chaos — they become the eye of the storm. The one the others look to and feel safe.",
+      reflection:"Leadership under pressure is a gift. Pray it over your captain specifically." },
+    { text:"May the bench be as alive as the pitch. May every substitute who enters carry the same energy, the same hunger, the same sharpness as those they replace. No drop in intensity. No drop in desire.",
+      reflection:"Matches are often won by those who come on in the second half. Declare over them too." },
+    { text:"I speak peace over the anxiety that comes before a big match. Let every player in that dressing room breathe deeply and know that they are ready. The preparation is done. Now they just have to play.",
+      reflection:"Pre-match nerves are real. This prayer covers the emotional state before a ball is even kicked." },
+    { text:"May the opposition play their best — and may my team still win. I do not pray for the other side to fail. I pray for my team to rise so high that the gap between them cannot be closed.",
+      reflection:"Praying from abundance, not fear. You do not need the other team to fail. Yours just needs to soar." },
+    { text:"I declare that every player on my team is exactly where they are supposed to be — on this pitch, in this tournament, in this moment. This is not an accident. This is their appointment.",
+      reflection:"Destiny is the deepest fuel. Pray that sense of appointment over every single player." },
+    { text:"Let the supporters in the stadium and the millions watching at home feel something today. Not just sport — but something bigger. Let the energy of this team touch people who did not even know they needed to be touched.",
+      reflection:"The greatest matches become cultural moments. Declare that this is one of them." },
+    { text:"I pray that the tactics work. That what the coach drew up on the board in the training ground transfers perfectly onto the pitch. That the plan holds. That when it bends, the players have the wisdom to adapt.",
+      reflection:"Tactics are intelligence. Pray over the mind of the coach and the discipline of the team." },
+    { text:"For every player who is playing through pain today — a knock they have not told anyone about — I pray that their body holds. That adrenaline and purpose carry them through every single minute.",
+      reflection:"Most players in a major tournament are playing through something. Declare endurance over their bodies." },
+    { text:"Let this victory be the one that unlocks the next. A momentum that does not stop. A belief that grows with every match. Let today be the beginning, not the peak.",
+      reflection:"Pray beyond today's match. Speak a tournament-defining run into existence." },
+    { text:"When the final whistle comes and my team has won, I pray that the celebration is full. That the tears are real. That the joy is unconstrained. That they know — truly know — what they have done and what it means.",
+      reflection:"Pray for the moment of victory itself. It deserves to be fully felt." },
+  ],
+
+  courage: [
+    { text:"I pray that my team does not play it safe today. That they take the risks that smaller teams would not take. That they shoot when logic says to pass, and press when instinct says hold back — and that it works.",
+      reflection:"Boldness is a choice. Pray it becomes their default setting." },
+    { text:"May the fear of failure not enter that dressing room. Let every player walk through the tunnel knowing that even if things go wrong, they played without apology, without hesitation, without flinching.",
+      reflection:"Freedom from fear of failure is one of the greatest competitive advantages." },
+    { text:"I declare courage over the young players in this squad who are experiencing a major tournament for the first time. Let the stage not swallow them. Let it summon them. Let them rise to meet it.",
+      reflection:"Rookies in big moments need this prayer specifically. Say their names if you know them." },
+    { text:"Let my team's striker be fearless in front of goal. Not reckless — but genuinely unafraid. Let that split-second moment when most players hesitate be the moment this one pulls the trigger.",
+      reflection:"The finest margins in football happen in that half-second of decision. Pray over it." },
+    { text:"I pray that when my team goes a goal down — if they do — they do not retreat into themselves. That they push forward. That the concession ignites them instead of breaking them.",
+      reflection:"The response to going behind separates great teams from good ones. Declare the great response." },
+    { text:"May every tackle be full-blooded. Every header committed. Every sprint down the wing made with everything the player has. I pray against the half-measure, the held-back effort, the hesitation born from fear of injury.",
+      reflection:"Physical courage on a football pitch is its own category. Pray into it directly." },
+    { text:"I pray for courageous substitutions. For the coach to trust their instincts when the system is not working. To make the change that needs to be made even when it is not the popular choice.",
+      reflection:"Managerial courage shapes matches. Pray over the bench as much as the pitch." },
+    { text:"Let the penalty taker step up with a calm that surprises even themselves. That the run-up is smooth, the technique is clean, and the mind is silent of everything except the exact spot they have already chosen.",
+      reflection:"Penalty moments are spiritual as much as technical. Pray over the whole person stepping up." },
+    { text:"I declare that my team has the courage to be different today. To play their own game, not the game their opponent wants them to play. To hold their identity under pressure and not be forced into a shape that is not theirs.",
+      reflection:"Tactical courage — staying true to identity under pressure — is rare and beautiful." },
+    { text:"May the goalkeeper be brave. May they command their box, come for crosses they are not sure they will reach, and spread themselves wide in a one-on-one without second-guessing the choice.",
+      reflection:"Goalkeeper courage is often invisible to viewers but decisive to outcomes. Name it." },
+    { text:"I pray that my team plays as if this is the last match any of them will ever play. Not with desperation — but with the kind of aliveness that only comes from knowing you have nothing to hold back.",
+      reflection:"Urgency and peace together. That is the state to pray into them." },
+    { text:"Let courage be contagious in this team. Let one brave run, one brave tackle, one brave decision light a fire that spreads through the entire squad until the whole eleven are playing like they cannot be stopped.",
+      reflection:"Courage is indeed contagious. Pray for the first spark." },
+    { text:"I pray for the player who has been doubted. Who the pundits wrote off. Who the system almost did not choose. Let their moment come today. Let courage meet opportunity and let everyone who doubted them go silent.",
+      reflection:"There is always a doubted player in every squad. This prayer is for them." },
+    { text:"May my team press high and press hard, even when the legs are tired. Even in the final ten minutes. Even when everything in the body says to drop and hold the line. Let courage overrule the body.",
+      reflection:"Late-game pressure from a tired team is one of the most courageous things in football." },
+    { text:"I declare that my team is not afraid of the occasion. That the size of the crowd, the weight of the moment, the history of this tournament — none of it shrinks them. All of it makes them bigger.",
+      reflection:"Pray that the occasion amplifies rather than diminishes them." },
+    { text:"For every player in this squad who has overcome personal adversity to be here — injury, loss, rejection — I pray that today is the day their story takes its most powerful turn.",
+      reflection:"Every squad carries private pain. Honour it with this prayer." },
+    { text:"Let bravery in possession be a hallmark of this team today. No hoofing the ball away under pressure. No panic clearance. Let them breathe on the ball, look, and play with a courage that makes the opponent uncomfortable.",
+      reflection:"Technical bravery — keeping the ball under pressure — requires a particular kind of courage." },
+    { text:"I pray that when the match reaches its hardest moment — and every great match has one — my team does not blink. That they meet the hardest moment with their chest open and their feet planted.",
+      reflection:"Pray specifically for that moment before it comes. Name it. Cover it." },
+    { text:"May the spirit of every athlete who ever played for this nation flow through this squad today. Let the legacy of those who came before give the present generation something to stand on.",
+      reflection:"A nation's football history is a resource. Pray that the team draws from it." },
+    { text:"I declare that courage today is a choice my team makes together, not a feeling they are waiting to arrive. They do not need to feel brave to play brave. They choose it. And I choose it with them from where I stand.",
+      reflection:"Courage is volitional, not accidental. Pray that your team knows the difference." },
+  ],
+
+  focus: [
+    { text:"I pray that every player on my team enters this match with a mind free from distraction. That the noise of the crowd, the pressure of expectation, and the weight of history fall away — and only the match remains.",
+      reflection:"Mental clarity is the foundation of great performance. Pray for it before anything else." },
+    { text:"May my team's concentration not waver in the second half when legs are tired and lungs are burning. Let the mind stay sharp even when the body is screaming. Let discipline of attention carry them through.",
+      reflection:"Concentration fatigue is real. Declare sustained mental sharpness." },
+    { text:"I pray for complete present-moment awareness across this entire squad. That no player is thinking about the last mistake, the missed chance, the goal they conceded. Only the next ball. Only the next movement.",
+      reflection:"Football is played in the present tense. This prayer keeps the team there." },
+    { text:"Let the game plan hold in their minds from the first minute to the last. Let every positional rotation, every pressing trigger, every set-piece sequence be recalled cleanly and executed without hesitation.",
+      reflection:"Mental discipline in executing a plan is underrated. Pray over their recall and execution." },
+    { text:"May my team's midfielders read the game three seconds ahead of everyone else today. Let their football intelligence be heightened. Let them see the pass before the ball arrives, the run before the space opens.",
+      reflection:"Elite midfield play is almost prophetic in its anticipation. Declare that anticipation." },
+    { text:"I pray against mental errors today. Against the switched-off moment, the ball watched instead of tracked, the player left unmarked for a fraction too long. Let every mind on that pitch be locked in for ninety minutes.",
+      reflection:"Most goals conceded at the highest level start with a single mental lapse. Cover that." },
+    { text:"May the team's set-piece concentration be absolute. Every corner delivered with intent. Every free-kick positioned to the exact coordinate that was drilled in training. Let the rehearsal become the performance.",
+      reflection:"Set pieces decide a huge number of matches. Pray over the team's discipline here." },
+    { text:"I declare that my team's attention narrows to its sharpest point in the final minutes. That the awareness does not drop, the legs do not lead the mind astray. The closer to the end, the more alive they become.",
+      reflection:"Late-game focus is a competitive advantage. Most teams drift. Declare that yours does not." },
+    { text:"Let the goalkeeper's eyes be precise today. Let them track the ball from the opposition's boot, read the angles early, and be exactly where they need to be — not reacting, but already there.",
+      reflection:"Goalkeeper positioning starts with focused tracking. Declare it before the match." },
+    { text:"I pray that my team zones in during the warm-up. That the music, the banter, the nerves all settle into a quiet centre. That by the time they line up in the tunnel, their minds are already on the pitch.",
+      reflection:"Pre-match preparation sets the mental tone. Pray over the warm-up itself." },
+    { text:"May every player in this squad tune out the social media, the punditry, the noise of a world with opinions. Let them hear only the voice of their teammates, their coach, and the deep knowing inside themselves.",
+      reflection:"External noise is one of the biggest distractions for modern athletes. Cover them." },
+    { text:"I declare laser-sharp focus over the strikers in front of goal today. No snatching. No overthinking. Just the pure, trained response: see the opening, strike the ball, trust the work.",
+      reflection:"Goal-scoring is ultimately a focused, automatic response. Pray it flows." },
+    { text:"Let the team's communication be sharp and constant. Clear calls, early warnings, decisive instructions between players. Not a position on the pitch that does not know what is happening around it.",
+      reflection:"Communication is collective focus. Pray for a team that talks and listens in equal measure." },
+    { text:"I pray that the coaching staff's instructions at half time cut through with perfect clarity. That the adjustments land in the players' minds exactly as intended. That the second half begins with renewed sharpness.",
+      reflection:"The half-time reset is a critical mental moment. Pray over it specifically." },
+    { text:"May the captain's focus be infectious. Let the team draw their concentration from their leader's example — calm, clear, completely in the moment — and match it.",
+      reflection:"Captains set the emotional and mental register for a team. Declare it." },
+    { text:"I pray that my team is not rattled by the opponent's time-wasting, physicality, or gamesmanship. Let them stay in the match mentally. Let the opponent's tactics of disruption fall on a team that cannot be disrupted.",
+      reflection:"Opponents will try to disturb focus. Pray a shield around your team's concentration." },
+    { text:"Let every training session that sharpened these players' minds come flooding back in the right moment. Let their muscle memory and their mental memory work together perfectly today.",
+      reflection:"Training is stored focus. Pray that it is fully retrieved when needed." },
+    { text:"May the young players especially stay in the moment. Let the magnitude of the occasion settle into something that focusses rather than overwhelms. Let the size of the stage become a reason to concentrate harder.",
+      reflection:"Young players in big matches often lose focus to awe. Pray that awe becomes concentration." },
+    { text:"I pray that my team has one goal in their collective mind for every moment of this match — to stay fully present, to play the next ball better than the last, and to not let a single second go to waste.",
+      reflection:"Present-moment focus is a practice and a discipline. Declare it as a team value." },
+    { text:"Let the final ball into the box be struck with focus and precision. The cross that has been practised ten thousand times. The movement timed perfectly. Let the focus of every training session arrive exactly here.",
+      reflection:"The goal-creating moment is the culmination of focused preparation. Declare it complete." },
+  ],
+
+  comeback: [
+    { text:"If my team falls behind today, I pray they do not believe the scoreline. Let them believe only in what they are capable of. A goal behind is not a verdict — it is a starting point.",
+      reflection:"The moment after conceding is the most important moment in a match. Pray over it." },
+    { text:"I declare that my team's greatest performance in this tournament happens after their hardest setback. That what breaks others only clarifies this squad — strips away everything except what matters most.",
+      reflection:"Some teams only discover what they are made of under pressure. Declare that yours emerges stronger." },
+    { text:"May the spirit of every great sporting comeback in history live in the bones of this team today. Let them know — in their bodies, not just their minds — that it is never over. It is never over.",
+      reflection:"History is full of impossible comebacks. Pray that your team knows it and draws from it." },
+    { text:"I pray for the player who made the mistake that let a goal in. Let shame not take root. Let them shake it off in seconds, find their position, and play the next ten minutes as the best ten minutes of their life.",
+      reflection:"Error recovery is one of the most important psychological skills in football. Pray for it." },
+    { text:"Let my team play their best football when it is hardest. When going behind triggers something in them — not panic, not retreat, but the controlled fury of a team that knows exactly what it is doing.",
+      reflection:"'Controlled fury' is the state great comeback teams reach. Pray your team into it." },
+    { text:"I declare that no matter what the half-time score is, the second half belongs to my team. That the dressing room conversation shifts everything. That they return to the pitch as a different team — sharper, hungrier, free.",
+      reflection:"The half-time rebirth is one of football's most dramatic moments. Speak it into existence." },
+    { text:"May the supporters in the stadium not go quiet when things get hard. Let their voice become a wall of sound that lifts my team from the floor, that reaches into the players' chests and pulls them forward.",
+      reflection:"The crowd is a resource in a comeback. Pray that they play their part." },
+    { text:"I pray for the moment when one player decides — quietly, without announcement — that this team is coming back. That they make a run nobody else makes, win a ball nobody else fights for, and turn the match.",
+      reflection:"Comebacks are usually started by one person's decision. Pray over whoever that person will be." },
+    { text:"Let my team resist the temptation to rush. To fire shots from anywhere and give the ball away in panic. Let them believe they have time. Let them play with pace but without desperation.",
+      reflection:"The discipline of a composed comeback is harder than urgency. Pray they find the balance." },
+    { text:"I pray for the substitute who comes on in the second half and changes the game. The fresh legs. The hungry eyes. The player who has been watching from the bench and knows exactly what needs to happen. Let them do it.",
+      reflection:"Some of the greatest comeback contributions come from the bench. Pray over those players." },
+    { text:"May this team's story in this tournament be a comeback story. Not because they were bad at the start — but because the greatest stories always have a moment where everything looks lost, and then it doesn't.",
+      reflection:"Narrative matters in sport. Pray for a story worth telling." },
+    { text:"I declare that when my team scores their equaliser, the momentum shifts completely and does not shift back. That the goal does not just tie the match — it breaks something in the opponent and builds something in mine.",
+      reflection:"Some goals do more than equalise. They transfer psychological momentum. Declare that transfer." },
+    { text:"Let my team draw on every hard moment in their history that brought them to this point. Every time they were told they were not good enough. Every time they lost and had to start again. Let it all become fuel.",
+      reflection:"Adversity is stored energy. Pray that your team knows how to spend it." },
+    { text:"I pray against resignation. Against the moment when a player's body language says we cannot do this. Let that moment never come. Let every player believe fully in the final second of the final minute.",
+      reflection:"Belief is the last thing to leave a great team. Pray it never leaves yours." },
+    { text:"May the coach's words in a moment of crisis be exactly the right words. Not tactical — but human. The kind of words that remind a group of players that they have been through worse, and they are still here.",
+      reflection:"Leadership communication in adversity is an art. Pray for the right words at the right time." },
+    { text:"I declare that comebacks are in this team's DNA. That they have been built for moments like this. That somewhere in their history, in their culture, in the way they were raised — they learned how to rise.",
+      reflection:"Pray into the identity and culture of the nation as much as the team." },
+    { text:"May every player who has ever worn this shirt and fought through a hard moment send their energy to this team today. Let the legacy of those who came before be a resource for those who are playing now.",
+      reflection:"Connect the current squad to their historical predecessors. Spiritual lineage is real." },
+    { text:"I pray that the team scores first after conceding — and that the goal silences the stadium, silences the commentators, silences everyone who had already written them off.",
+      reflection:"A goal in response to adversity carries a particular energy. Pray for that exact moment." },
+    { text:"Let the comeback be a teaching that travels further than the match itself. That young people watching in their homes learn from this team what it looks like to refuse defeat — and carry it into their own lives.",
+      reflection:"Great sporting moments teach beyond sport. Pray for that generational impact." },
+    { text:"When it is over and my team has come back to win, I pray that the players know exactly what they did. That they did not just score goals. They chose, together, to refuse the story that was being written for them.",
+      reflection:"Help your team understand the deeper meaning of what a comeback represents." },
+  ],
+
+  unity: [
+    { text:"I pray that my team plays like one body today. That the eleven individuals on that pitch become a single organism — thinking together, moving together, breathing together in the same rhythm.",
+      reflection:"The highest expression of team sport is genuine collective unity. Declare it." },
+    { text:"May there be no ego on that pitch today. No player playing for themselves. No striker holding the ball too long because they want the goal. No defender stepping out of position because they see a chance to shine. Let the team be the star.",
+      reflection:"Ego suppression for team benefit is one of the hardest things in sport. Pray for it explicitly." },
+    { text:"I declare that the bond between these players goes deeper than the match. That they have built something in training and in travel and in the shared experience of representing their nation that no opposition can fracture.",
+      reflection:"Team unity is built before the match. Pray that what was built holds firm." },
+    { text:"May the substitutes on the bench be the loudest supporters in the stadium. Let there be no resentment toward those who are playing. Let every player on the bench will their teammates to greatness.",
+      reflection:"Bench unity is often the hidden factor in a team's collective energy. Pray for it." },
+    { text:"I pray that when one player is struggling, their teammates cover for them without hesitation and without judgment. That the team protects its own. That no individual weakness becomes a collective wound.",
+      reflection:"The protection of a struggling teammate is one of the most beautiful things in team sport." },
+    { text:"Let the goalkeeper and the defenders operate as a single unit. Let communication between them be instinctive. Let no gap open between them because each trusts the other too completely to leave space uncovered.",
+      reflection:"Defensive unity is the foundation of every successful team. Speak it over the back line." },
+    { text:"I pray for the partnerships across this team — the full-back and the winger, the two centre-backs, the double pivot in midfield. Let their chemistry today be so natural it looks like they have played together for decades.",
+      reflection:"Football is built on specific partnerships. Pray over each of them." },
+    { text:"May the team celebrate every goal as if every player scored it. May the player on the bench run to the touchline. May the goalscorer find their teammates first. May the joy be completely shared.",
+      reflection:"Shared celebration is a visible marker of genuine team unity." },
+    { text:"I declare that language is no barrier in this squad. That players from different backgrounds, different faiths, different mother tongues are unified by the single language of football and the shared desire to win.",
+      reflection:"Modern squads are beautifully diverse. Pray that diversity becomes a strength." },
+    { text:"Let the team's defensive shape hold with the discipline of players who trust each other completely. No one breaking the line early. No one making the move that causes the gap. Let unity be the defensive system.",
+      reflection:"Trust and unity are the invisible architecture of a solid defence." },
+    { text:"I pray that the team eats together, travels together, and prays or meditates together before this match. That the rituals of togetherness done in private give them a foundation that opponents cannot see but will feel.",
+      reflection:"Off-pitch unity translates to on-pitch cohesion. Pray over the private moments too." },
+    { text:"May the veteran players and the young players in this squad find each other today. Let experience reach down and pull potential up. Let youth push experience to find something it had forgotten it still had.",
+      reflection:"The exchange between veterans and young players is one of the richest team dynamics." },
+    { text:"I declare that this team goes into battle as a family. And families do not leave each other behind. They fight hardest when one of them is down. They are most dangerous when they are fighting for each other, not for themselves.",
+      reflection:"The family metaphor for a team is ancient and true. Speak it into this squad." },
+    { text:"Let the team's pressing be collective and synchronised. Let the triggers be felt without being spoken. Let eleven players move as one defensive unit, compressing space with the kind of coordination that only comes from true unity.",
+      reflection:"Collective pressing requires complete mutual trust and shared understanding. Declare it." },
+    { text:"I pray for the captain to carry the team's unity in their body language throughout this match. Let the players see in their leader's posture and eyes that they are in this together — and let that be enough.",
+      reflection:"Captains communicate unity non-verbally as much as with words. Pray over their presence." },
+    { text:"May the team's support network — the coaches, the analysts, the medical staff, the kit men — all feel the weight of what they have contributed. Let the unity extend beyond the eleven. This is everyone's win.",
+      reflection:"Team unity extends to the entire support structure. Include them in this prayer." },
+    { text:"I declare that what divides nations off the pitch has no authority over what unites this team on it. That their shared jersey, shared mission, and shared moment is more powerful than any difference.",
+      reflection:"Sport at its best transcends division. Pray this match is that kind of transcendence." },
+    { text:"May no moment of individual brilliance come at the cost of team structure. Let the skillful player use their gift in service of the collective. Let flair serve unity, not compete with it.",
+      reflection:"Individual brilliance and team unity can coexist. Pray that this team proves it." },
+    { text:"I pray that the team finishes this match — whatever the result — with their arms around each other. That win or lose, the unity is the thing that holds. The thing that makes them able to go again.",
+      reflection:"Unity beyond results is the mark of a truly great team. Declare it." },
+    { text:"Let the anthem before this match be more than ceremony. Let every player singing or standing feel the full weight of who they represent. Let unity arrive before the first ball is even kicked.",
+      reflection:"The anthem is the first moment of collective identity. Pray over it." },
+  ],
+
+  strength: [
+    { text:"I pray that my team's physical preparation carries them through every single minute of this match. That the conditioning drilled into their bodies over months does not fail them in the moments they need it most.",
+      reflection:"Physical strength is earned before the match. Pray that it shows up fully." },
+    { text:"May the players who have been carrying knocks and minor injuries be held together today. That pain does not become injury. That the body finds what it needs to complete the match at full contribution.",
+      reflection:"Most players in major tournaments are managing something physical. Cover them." },
+    { text:"I declare physical dominance for my team in the air today. In every header. Every aerial contest. Every set-piece and cross. Let them outjump, out-time, and out-compete whoever opposes them above the ground.",
+      reflection:"Aerial dominance is physical, mental and brave. Declare it over the team." },
+    { text:"Let my team win every first contact. Every fifty-fifty ball. Every shoulder-to-shoulder challenge. Let them be the team that arrives first and leaves last in every contest.",
+      reflection:"First contact in football is a battle of will as much as physicality. Pray for that will." },
+    { text:"I pray that my team's pressing intensity does not drop below what the opponent can handle. That for ninety minutes, they are the more physical team — and that physicality is disciplined, not reckless.",
+      reflection:"Physical intensity maintained over ninety minutes is a form of supremacy." },
+    { text:"May the striker hold up play with the strength of a wall today. Back to goal, shielding possession, winning fouls and creating time for the team to breathe. Let physical intelligence serve the whole squad.",
+      reflection:"Holding strength in a striker is a different gift from pace or technique. Pray for it." },
+    { text:"I pray for full-backs who sprint the length of the pitch and still track back. Who add to the attack and do not leave the defence exposed. Let their endurance be limitless. Let their lungs be larger than the match.",
+      reflection:"Full-back endurance is one of the most demanding physical requirements in modern football." },
+    { text:"Let the team's centre-backs be immovable today. Physical, dominant, unbeatable in the air and on the ground. Let the opposition's striker feel, from the first challenge, that today is not their day.",
+      reflection:"Centreback dominance can define the entire psychological tone of a match." },
+    { text:"I declare that my team's physical peak arrives exactly in time for this match. Not too early, not too late. Let the taper, the rest, and the preparation align perfectly with this moment.",
+      reflection:"Peaking at the right time in a tournament is a discipline and a gift. Pray for that alignment." },
+    { text:"May every sprint be won. Every recovery run completed. Every chase that looks impossible become possible through a refusal to let the physical discomfort make the decision.",
+      reflection:"Recovery runs are often the most important sprints in a match. Declare that they happen." },
+    { text:"I pray that my team's physical strength is matched by physical intelligence. That they know when to use their body to protect possession, when to foul to stop a counter, when to absorb contact and keep moving.",
+      reflection:"Smart physicality is a higher skill than raw strength. Pray for both." },
+    { text:"Let the goalkeepers' hands be strong and sure today. Not spilling what they should hold. Not fumbling under pressure. Let grip and strength and positioning be their contribution to the team's physical dominance.",
+      reflection:"Goalkeeper handling under physical pressure is its own distinct form of strength." },
+    { text:"I pray that the team's physical battles in the first fifteen minutes set the tone for everything that follows. That the opponent feels, from the first contested ball, that they are in for a long, hard match.",
+      reflection:"Early physicality establishes psychological territory. Pray for that establishment." },
+    { text:"May my team's physical preparation be a tribute to every coach, physio, and fitness trainer who worked with them across the season. Let the weight of that collective effort carry the squad through the hardest moments.",
+      reflection:"Physical readiness is the result of an entire ecosystem of support. Honour it in this prayer." },
+    { text:"I declare endurance over the players who have played the most minutes in this tournament. Let their bodies recover faster than the science says is possible. Let resilience exceed expectation.",
+      reflection:"Tournament fatigue accumulates. Pray for supernatural recovery for the highest-minute players." },
+    { text:"Let my team never lose a match because of physical decline in the final twenty minutes. Let them be the fitter team. Let their conditioning be the reason the opponent's best chances come to nothing in the end.",
+      reflection:"Late-game physical superiority is a competitive advantage worth praying for specifically." },
+    { text:"I pray for protection against serious injury today. That every tackle is safe. That every landing is clean. That every player who starts this match finishes it on their own two feet.",
+      reflection:"Safety is a form of prayer for strength — the strength that holds the body together." },
+    { text:"May the team's strength come not just from muscle but from will. The kind of strength that shows up when the physical tank is empty and only something deeper can carry a player the last five minutes.",
+      reflection:"The deepest strength is volitional, not physical. Pray for that final level." },
+    { text:"I declare that the team's physical presence on the pitch today sends an early message. That from the warm-up, from the line-up, from the first touch — the opponent sees a team that came here ready.",
+      reflection:"Physical presence communicates before a ball is kicked. Pray for that communication." },
+    { text:"When the final whistle blows and this team has given everything physically — when their bodies are emptied — I pray they feel not devastation but the deep satisfaction of having held nothing back. Of having used every last thing they had.",
+      reflection:"The feeling of complete physical expenditure in service of a team is one of sport's most profound experiences." },
+  ],
+
+  legacy: [
+    { text:"I pray that this team plays with an awareness that what they do today will be talked about for years. That every decision is made by players who know they are writing something, not just playing something.",
+      reflection:"Legacy-consciousness does not create pressure — it creates elevation. Pray for that mindset." },
+    { text:"May the young people in this nation who are watching today see something in this team that they carry into their own lives. Not just the goals and the celebrations — but the way they handled pressure. The way they stayed together.",
+      reflection:"Athletes model behaviour for millions. Pray over what is being modelled." },
+    { text:"I declare that this tournament is a turning point in the story of this nation's football. That what happens here changes the trajectory. That the next generation inherits a different belief because of what this team does today.",
+      reflection:"Generational impact is the deepest form of legacy. Pray for it." },
+    { text:"Let every legendary player who wore this shirt before be honoured by what this squad does today. Let the greats of the past feel that what they built has been carried forward, not forgotten.",
+      reflection:"Connecting present performance to past legends creates a powerful sense of belonging." },
+    { text:"I pray that the captain's performance today becomes the moment that defines them. Not just as a player — but as a symbol. The story that is told to explain what kind of person they were.",
+      reflection:"Captains in major tournaments often carry legacy-defining moments. Pray that theirs arrives." },
+    { text:"May the way this team loses, if they lose, become a legacy of its own. A loss so dignified, so full, so well-contested that the nation stands taller for it. A defeat that plants seeds for a future victory.",
+      reflection:"How a team loses matters to legacy as much as how they win." },
+    { text:"I declare that the players in this squad become mentors and role models after this tournament. That the way they carry themselves here — the discipline, the unity, the courage — becomes the example for the next squad.",
+      reflection:"The transmission of legacy from one generation to the next is a spiritual act." },
+    { text:"Let this team play in a way that makes people fall in love with their nation's football. That neutrals watching become fans. That people who did not care before this tournament find themselves unable to look away.",
+      reflection:"Legacy includes the expansion of a fanbase. Pray for the team to earn new devotion." },
+    { text:"I pray for the stories that will be written after this match. Let them be stories worth writing. Let the reporters, the historians, the football lovers who document this sport find something in today that deserves to last.",
+      reflection:"Documentation is how legacy is preserved. Pray over the story that gets told." },
+    { text:"May this team's tournament run be the one that a father tells his child about. The one that a child watches a grainy replay of forty years from now and feels the electricity through the screen.",
+      reflection:"The matches that become folklore do something that defies explanation. Pray for that quality." },
+    { text:"I declare that the sacrifices these players have made — the time away from family, the physical pain, the years of discipline — find their full reward in what is built here. Not just in results, but in what endures.",
+      reflection:"Sacrifice deserves reward. Pray that the return matches the investment." },
+    { text:"Let the coach's legacy be shaped by this tournament. Not just wins and losses — but by the kind of human beings they helped these players become under pressure. Let that be the measure.",
+      reflection:"Coaching legacy is measured in character as much as trophies. Declare both." },
+    { text:"I pray for the player who steps onto this stage for the first time. Who years from now will tell their grandchildren: I was there. Let that memory be worth everything they have given to reach this moment.",
+      reflection:"First major tournament experiences become lifelong identity markers. Honour this one." },
+    { text:"May this tournament reveal something in this team that they did not fully know was there. That the stage draws out a version of them that is better than the version they arrived with.",
+      reflection:"Tournaments can reveal latent greatness. Pray that this one does." },
+    { text:"I declare that this nation's football legacy grows today — regardless of the result. That what is contributed to the sport, to the culture, to the human story of a people who love this game is added to permanently.",
+      reflection:"Legacy is additive. Every match that is played with heart adds to what came before." },
+    { text:"Let the match officials, the broadcasters, the administrators — everyone who has a role in making this tournament happen — be part of a legacy they can be proud of. Let excellence pervade every level.",
+      reflection:"Legacy is systemic, not just individual. Pray over the whole ecosystem." },
+    { text:"I pray that if trophies come, they are carried with humility. And if they do not come, that what was built here is not measured by whether a cup was lifted but by whether a people was moved.",
+      reflection:"Trophies are the most visible form of legacy but not always the most important one." },
+    { text:"May the stories of this team travel beyond their own borders. Let nations who have no stake in the result be drawn in. Let football do what it does at its best — connect the world around something beautiful.",
+      reflection:"The greatest football stories transcend nationality. Pray for universal resonance." },
+    { text:"I declare that this is a team that history will remember. Not only for what they won — but for how they played, how they held together, how they represented their people with grace and fire in equal measure.",
+      reflection:"Grace and fire together is the most powerful combination in sport. Pray for both." },
+    { text:"Let the legacy of this match outlive every player in it. Let what was done today still mean something when the ones who did it are long gone. Let it be that kind of match. Let it be that kind of team.",
+      reflection:"True legacy transcends the lifetimes of those who create it. Pray for that permanence." },
+  ],
+
+  nations: [
+    { text:"I pray for every nation represented in this tournament. That the spirit of fair competition, mutual respect, and shared love of the game unites what politics and history so often divides.",
+      reflection:"The World Cup is one of the few places where the world genuinely gathers. Pray over that gathering." },
+    { text:"May the smaller nations in this tournament be lifted beyond what anyone expected of them. Let the so-called minnows find something in themselves that shocks the world and makes every football lover cheer.",
+      reflection:"Underdog runs are the soul of tournament football. Pray for one." },
+    { text:"I declare that this World Cup is a gift to the human race. That in a world fractured by conflict, by inequality, by division — one ball, one pitch, and the universal language of football creates something rare: peace.",
+      reflection:"Sport's power to create temporary peace is real and worth praying for." },
+    { text:"Let the African nations in this tournament remind the world that football's future is as much theirs as anyone's. That the talent, the passion, the football intelligence of this continent is without ceiling.",
+      reflection:"Africa's football legacy is vast and growing. Pray for this generation to add to it." },
+    { text:"I pray for every nation that has never won the World Cup. That this generation of players carries the weight of that longing as fuel, not as burden. And that one day — perhaps today — the wait ends.",
+      reflection:"National longing is one of the most powerful forces in sport. Honour it." },
+    { text:"May the host nation feel the full joy of welcoming the world. Let the atmosphere in the stadiums be something no player who visits ever forgets. Let hospitality be this tournament's defining quality.",
+      reflection:"Hosting a tournament is itself a form of service to the world. Pray over it." },
+    { text:"I declare that every flag in those stadiums represents something sacred — a people, a history, a culture, a language, a dream. Let no flag be treated as less than that. Let every nation be honoured.",
+      reflection:"Flags are compressed identity. Pray that this tournament honours the depth behind each one." },
+    { text:"Let the South American nations play with the creativity, the street intelligence, and the joyful audacity that has always made their football something the world stands up to watch.",
+      reflection:"South American football carries a particular spirit. Pray it shows up fully." },
+    { text:"I pray for the European nations — disciplined, tactical, relentless. Let their football be a masterclass in organisation and precision. Let their best qualities surface when it matters most.",
+      reflection:"European football's strengths are real and worth celebrating in prayer." },
+    { text:"May the Asian nations play with a hunger that comes from knowing they have something to prove and the ability to prove it. Let this tournament mark a new chapter in Asian football's standing in the world.",
+      reflection:"Asian football has grown enormously. Pray that this tournament reflects that growth." },
+    { text:"I pray for the players who have left their home nations to earn a living in foreign leagues. Who play under different flags every week but carry one nation in their heart. Let home find them in this moment.",
+      reflection:"Diaspora athletes experience a particular form of belonging. Honour it in prayer." },
+    { text:"May the CONCACAF nations — the United States, Mexico, Canada — use the privilege of hosting to play with a freedom and a joy that shows their own people what they are capable of.",
+      reflection:"Host nations carry unique pressure. Pray that it becomes freedom, not weight." },
+    { text:"I declare that the nations of the world competing in this tournament are more alike than they know. That the dreams of a young player in Lagos are the same dreams as a young player in London or Lima or Lisbon.",
+      reflection:"Universal human longing is what football expresses. Pray for that recognition." },
+    { text:"Let the referee's flag become irrelevant at the end of this tournament — because the quality of competition, the fairness of officiating, and the spirit of the game will have been high enough that no result feels stolen.",
+      reflection:"Fair competition is a prayer for the entire system. Pray for it." },
+    { text:"I pray for the nations that do not qualify. Whose players watched from home while others walked out to the anthem. Let this tournament give them a reason to believe that their time is coming.",
+      reflection:"The nations outside the tournament are watching. Pray for what this inspires in them." },
+    { text:"May the football of every nation tell its own story. That a team's style carries the culture, the music, the rhythm, the identity of its people. Let football be anthropology — the world studying itself through a game.",
+      reflection:"Footballing style as cultural expression is one of the sport's most beautiful qualities." },
+    { text:"I declare that this tournament plants seeds of football development in nations that have never been to a World Cup. That a child watching in a country still on the outside decides today that they will change that.",
+      reflection:"Football's global reach is generational. Pray for the child who will be changed by what they watch." },
+    { text:"Let the commentary, the coverage, and the storytelling around this tournament lift nations up rather than reduce them to stereotypes. Let the world be told the fuller, truer, more complex story of each nation.",
+      reflection:"Narrative power shapes perception. Pray for the stories told about nations to honour them." },
+    { text:"I pray for the families of every player in this tournament who sacrificed to put their child in a position to wear a national shirt. The mothers who washed the boots, the fathers who drove at dawn, the siblings who shared the dream.",
+      reflection:"Behind every international player is a family story. Honour those families." },
+    { text:"Let this World Cup end with the whole world feeling it was worth it. That the sport was elevated. That the nations were honoured. That the people who gave their hearts to this tournament — players, coaches, fans — found it was worth every sacrifice they made.",
+      reflection:"The closing prayer is for the whole tournament and everyone who gave themselves to it." },
+  ],
+};
+
+// ══════════════════════════════════════════════════════════
+// APP STATE
+// ══════════════════════════════════════════════════════════
+let currentLang = 'en';
+let currentCat = null;
+let currentIndex = 0;
+let isAnimating = false;
+// We'll only use EN prayers (translation would need a backend)
+// But we'll wire the language selector for UI purposes
+
+// ══════════════════════════════════════════════════════════
+// SCREEN MANAGEMENT
+// ══════════════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════════
+function renderLangList() {
+  const el = document.getElementById('lang-list');
+  el.innerHTML = LANGS.map(l => `
+    <div class="lang-item ${l.code === currentLang ? 'selected' : ''}" onclick="setLang('${l.code}')">
+      <div class="lang-item-flag">${l.flag}</div>
+      <div class="lang-item-info">
+        <div class="lang-item-name">${l.label}</div>
+        <div class="lang-item-native">${l.native}</div>
+      </div>
+      <div class="lang-check">✓</div>
+    </div>
+  `).join('');
+}
+
+function renderCatGrid() {
+  const el = document.getElementById('cat-grid');
+  el.innerHTML = CATEGORIES.map(cat => `
+    <div class="cat-card" onclick="openCategory('${cat.id}')">
+      <div class="cat-card-shine" style="background: linear-gradient(90deg, transparent, ${cat.color}40, transparent);"></div>
+      <div class="cat-card-glow" style="background: radial-gradient(circle, ${cat.color} 0%, transparent 70%);"></div>
+      <span class="cat-icon">${cat.icon}</span>
+      <div class="cat-name">${cat.label[currentLang] || cat.label['en']}</div>
+      <div class="cat-sub">20 ${I18N[currentLang]?.prayers || 'Prayers'}</div>
+      <div class="cat-arrow">›</div>
+    </div>
+  `).join('');
+}
+
+function updateHomeI18n() {
+  const t = I18N[currentLang] || I18N['en'];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
+  document.getElementById('daily-text').textContent = `"${DAILY[currentLang] || DAILY['en']}"`;
+  document.getElementById('home-flag').textContent = LANGS.find(l => l.code === currentLang)?.flag || '🇬🇧';
+  document.getElementById('home-lang-label').textContent = LANGS.find(l => l.code === currentLang)?.label || 'English';
+  document.getElementById('cat-count').textContent = `${CATEGORIES.length} ${t.choose?.toLowerCase() || 'categories'}`;
+}
+
+// ══════════════════════════════════════════════════════════
+// CATEGORY + PRAYER
+// ══════════════════════════════════════════════════════════
+function openCategory(id) {
+  currentCat = id;
+  currentIndex = 0;
+  const cat = CATEGORIES.find(c => c.id === id);
+
+  // Set bg glow
+  document.getElementById('prayer-bg').style.background =
+    `radial-gradient(ellipse at 50% 0%, ${cat.color}18 0%, transparent 60%)`;
+
+  // Set label
+  document.getElementById('prayer-cat-label').innerHTML =
+    `<span>${cat.icon}</span><span style="color:${cat.color}">${cat.label[currentLang] || cat.label['en']}</span>`;
+
+  document.querySelector('.counter-fill').style.background = cat.color;
+  document.getElementById('prayer-divider').style.background = cat.color;
+  document.getElementById('next-btn').style.background = cat.color;
+  document.getElementById('next-btn').style.color = '#000';
+
+  renderPrayer();
+  showScreen('prayer');
+}
+
+function renderPrayer(dir = 0) {
+  const prayers = PRAYERS_EN[currentCat];
+  const total = prayers.length;
+  const p = prayers[currentIndex];
+  const card = document.getElementById('prayer-card');
+
+  if (dir !== 0) {
+    card.classList.add(dir > 0 ? 'exit-up' : 'exit-down');
+    setTimeout(() => {
+      card.classList.remove('exit-up', 'exit-down');
+      setPrayerContent(p, currentIndex, total);
+    }, 280);
+  } else {
+    setPrayerContent(p, currentIndex, total);
+  }
+}
+
+function setPrayerContent(p, idx, total) {
+  const num = String(idx + 1).padStart(2, '0');
+  document.getElementById('prayer-number').textContent = `Prayer ${num}`;
+  document.getElementById('prayer-text').textContent = `"${p.text}"`;
+  document.getElementById('prayer-reflection').textContent = p.reflection;
+
+  const pct = ((idx + 1) / total) * 100;
+  document.getElementById('counter-fill').style.width = pct + '%';
+  document.getElementById('counter-num').textContent = `${idx + 1} / ${total}`;
+
+  document.getElementById('prev-btn').disabled = idx === 0;
+  document.getElementById('next-btn').disabled = idx === total - 1;
+
+  const t = I18N[currentLang] || I18N['en'];
+  const nextBtn = document.getElementById('next-btn');
+  if (idx < total - 1) {
+    nextBtn.innerHTML = `<span>${t.next || 'Next Prayer'}</span> <span>→</span>`;
+  } else {
+    nextBtn.innerHTML = `<span>Complete ✓</span>`;
+  }
+}
+
+function nextPrayer() {
+  const prayers = PRAYERS_EN[currentCat];
+  if (currentIndex < prayers.length - 1) {
+    currentIndex++;
+    renderPrayer(1);
+  }
+}
+
+function prevPrayer() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderPrayer(-1);
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// LANGUAGE
+// ══════════════════════════════════════════════════════════
+function setLang(code) {
+  currentLang = code;
+  document.documentElement.lang = code;
+  document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
+  updateHomeI18n();
+  renderCatGrid();
+  renderLangList();
+  showScreen('home');
+}
+
+// ══════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════
+renderCatGrid();
+renderLangList();
+updateHomeI18n();
+</script>
+
+</body>
+</html>
